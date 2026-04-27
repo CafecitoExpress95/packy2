@@ -30,3 +30,5 @@ CLAUDE.md
 justfile
 /.tmp.driveupload
 /.tmp.drivedownload
+AGENTS.md
+/.agents
