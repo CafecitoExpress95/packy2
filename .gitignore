@@ -32,3 +32,4 @@ justfile
 /.tmp.drivedownload
 AGENTS.md
 /.agents
+/.graphify-out

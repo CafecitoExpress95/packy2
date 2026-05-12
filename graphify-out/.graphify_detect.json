@@ -1,0 +1,45 @@
+{
+  "files": {
+    "code": [
+      "M:\\Workspace\\Packy2\\src\\app.d.ts",
+      "M:\\Workspace\\Packy2\\src\\lib\\export.js",
+      "M:\\Workspace\\Packy2\\src\\lib\\import.js",
+      "M:\\Workspace\\Packy2\\src\\lib\\index.ts",
+      "M:\\Workspace\\Packy2\\src\\lib\\quantity.js",
+      "M:\\Workspace\\Packy2\\src\\lib\\storage.js",
+      "M:\\Workspace\\Packy2\\src\\lib\\store.js",
+      "M:\\Workspace\\Packy2\\src\\lib\\theme.js",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\BagEditModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\BagSection.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\CategoryEditModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\CategorySection.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\CriticalConfirmModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\ItemEditModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\ItemList.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\PackingView.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\StageEditModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\StageSection.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\TaskConfirmModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\TaskEditModal.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\components\\TripHeader.svelte",
+      "M:\\Workspace\\Packy2\\src\\lib\\storage\\migration.js",
+      "M:\\Workspace\\Packy2\\src\\routes\\+layout.js",
+      "M:\\Workspace\\Packy2\\src\\routes\\+layout.svelte",
+      "M:\\Workspace\\Packy2\\src\\routes\\+page.svelte"
+    ],
+    "document": [
+      "M:\\Workspace\\Packy2\\src\\app.html"
+    ],
+    "paper": [],
+    "image": [
+      "M:\\Workspace\\Packy2\\src\\lib\\assets\\favicon.svg"
+    ],
+    "video": []
+  },
+  "total_files": 27,
+  "total_words": 8904,
+  "needs_graph": false,
+  "warning": "Corpus is ~8,904 words - fits in a single context window. You may not need a graph.",
+  "skipped_sensitive": [],
+  "graphifyignore_patterns": 0
+}
