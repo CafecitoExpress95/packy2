@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import { flip } from 'svelte/animate';
 	import { dndzone, TRIGGERS } from 'svelte-dnd-action';
 	import {
@@ -216,6 +217,13 @@
 	</div>
 {:else if !$tripStore && !showForm}
 	<div class="trip-manager">
+		<img
+			class="trip-manager-illustration"
+			src={`${base}/Packy_Luggy-Looking.png`}
+			alt="Packy looking for a trip to load"
+			width="1024"
+			height="1024"
+		/>
 		<h2 class="trip-manager-title">Your Trips</h2>
 
 		{#if allTrips.length > 0}
@@ -473,6 +481,15 @@
 		flex-direction: column;
 		gap: 1rem;
 		padding: 0.5rem 0;
+	}
+
+	.trip-manager-illustration {
+		align-self: center;
+		width: min(100%, 260px);
+		height: auto;
+		aspect-ratio: 1;
+		border-radius: 8px;
+		object-fit: cover;
 	}
 
 	.trip-manager-title {

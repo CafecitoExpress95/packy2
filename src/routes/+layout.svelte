@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import { themeStore } from '$lib/theme.js';
-	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();
 	let currentTheme = $state('packy-blue');
@@ -20,17 +20,17 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" type="image/png" sizes="50x50" href={`${base}/Packy_Favi.png`} />
 </svelte:head>
 
 <header class="app-header">
-	<span class="app-title">Packy2</span>
+	<img class="app-logo" src={`${base}/Packy_Logo.png`} alt="Packy" width="512" height="512" />
 	<button class="theme-toggle" onclick={toggleTheme}>
 		{currentTheme === 'packy-blue' ? '🩵 Packy Blue' : '💜 Mrs. Packy'}
 	</button>
 </header>
 
-<main class="app-main">
+<main class="app-main" style:--packy-background-image={`url("${base}/Packy_Tiling_Background.jpg")`}>
 	<div class="app-body">
 		{@render children()}
 	</div>
@@ -53,10 +53,11 @@
 		padding: 0.75rem 1rem;
 	}
 
-	.app-title {
-		font-size: 1.2rem;
-		font-weight: 700;
-		letter-spacing: 0.02em;
+	.app-logo {
+		display: block;
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
 	}
 
 	.theme-toggle {
@@ -76,6 +77,14 @@
 	.app-main {
 		min-height: calc(100dvh - 120px);
 		padding: 1rem;
+		background-color: var(--color-bg);
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.28)),
+			var(--packy-background-image);
+		background-attachment: fixed;
+		background-position: top left;
+		background-repeat: repeat;
+		background-size: auto, 256px 256px;
 	}
 
 	.app-body {
@@ -95,6 +104,11 @@
 	}
 
 	@media (max-width: 480px) {
+		.app-logo {
+			width: 34px;
+			height: 34px;
+		}
+
 		.app-main {
 			padding: 0.5rem;
 		}
