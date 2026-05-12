@@ -24,7 +24,7 @@ vite.config.ts.timestamp-*
 
 # User Ignores
 /.packy
-/.claude
+/.codex
 /.user
 CLAUDE.md
 justfile
@@ -32,4 +32,5 @@ justfile
 /.tmp.drivedownload
 AGENTS.md
 /.agents
-/.graphify-out
+/graphify-out
+
