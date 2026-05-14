@@ -50,6 +50,10 @@ export function buildTemplateExport(trip) {
 			...task,
 			bool_verified: false,
 			bool_done: false
+		})),
+		arr_fields: (trip.arr_fields ?? []).map((field) => ({
+			...field,
+			str_value: ''
 		}))
 	};
 	return buildTripExport(clone, 'template');

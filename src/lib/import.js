@@ -30,6 +30,16 @@ function normalizeTask(task, isTemplate) {
 	};
 }
 
+function normalizeField(field, isTemplate) {
+	return {
+		int_order: 0,
+		str_label: '',
+		str_value: '',
+		...field,
+		...(isTemplate ? { str_value: '' } : {})
+	};
+}
+
 function normalizeTrip(tripData, type) {
 	const isTemplate = type === 'template';
 	return {
@@ -38,8 +48,10 @@ function normalizeTrip(tripData, type) {
 		arr_bags: tripData.arr_bags ?? [],
 		arr_categories: tripData.arr_categories ?? [],
 		arr_stages: tripData.arr_stages ?? [],
+		arr_field_groups: tripData.arr_field_groups ?? [],
 		arr_items: (tripData.arr_items ?? []).map((item) => normalizeItem(item, isTemplate)),
-		arr_tasks: (tripData.arr_tasks ?? []).map((task) => normalizeTask(task, isTemplate))
+		arr_tasks: (tripData.arr_tasks ?? []).map((task) => normalizeTask(task, isTemplate)),
+		arr_fields: (tripData.arr_fields ?? []).map((field) => normalizeField(field, isTemplate))
 	};
 }
 

@@ -21,15 +21,25 @@ import { parseQuantity } from './quantity.js';
 export const tripStore = writable(null);
 export const isStoreReady = writable(false);
 
+function withTripDefaults(trip) {
+	if (!trip) return trip;
+	return {
+		...trip,
+		arr_bags: trip.arr_bags ?? [],
+		arr_categories: trip.arr_categories ?? [],
+		arr_items: trip.arr_items ?? [],
+		arr_stages: trip.arr_stages ?? [],
+		arr_tasks: trip.arr_tasks ?? [],
+		arr_field_groups: trip.arr_field_groups ?? [],
+		arr_fields: trip.arr_fields ?? []
+	};
+}
+
 // Async initialization function
 export async function initializeTripStore() {
 	if (!browser) return null;
 
-	const trip = await getTrip();
-	if (trip) {
-		if (!trip.arr_stages) trip.arr_stages = [];
-		if (!trip.arr_tasks) trip.arr_tasks = [];
-	}
+	const trip = withTripDefaults(await getTrip());
 	tripStore.set(trip);
 	isStoreReady.set(true);
 	return trip;
@@ -46,7 +56,9 @@ export async function createTrip(name, departureDate, returnDate, duration) {
 		arr_categories: [],
 		arr_items: [],
 		arr_stages: [],
-		arr_tasks: []
+		arr_tasks: [],
+		arr_field_groups: [],
+		arr_fields: []
 	});
 
 	tripStore.set(newTrip);
@@ -72,6 +84,80 @@ export async function updateTrip(fields) {
 	});
 }
 
+// --- Trip field groups ---
+
+export async function addFieldGroup(groupName) {
+	if (!groupName?.trim()) return;
+
+	await updateAndSave((trip) => {
+		const newGroup = {
+			int_id: Date.now(),
+			str_name: groupName.trim(),
+			int_order: trip.arr_field_groups.length
+		};
+
+		return {
+			...trip,
+			arr_field_groups: [...trip.arr_field_groups, newGroup]
+		};
+	});
+}
+
+export async function renameFieldGroup(groupId, newName) {
+	if (!newName?.trim()) return;
+
+	await updateAndSave((trip) => ({
+		...trip,
+		arr_field_groups: trip.arr_field_groups.map((group) =>
+			group.int_id === groupId ? { ...group, str_name: newName.trim() } : group
+		)
+	}));
+}
+
+export async function deleteFieldGroup(groupId) {
+	await updateAndSave((trip) => ({
+		...trip,
+		arr_field_groups: trip.arr_field_groups.filter((group) => group.int_id !== groupId),
+		arr_fields: trip.arr_fields.filter((field) => field.int_group_id !== groupId)
+	}));
+}
+
+export async function addField(groupId, label = '') {
+	if (!label?.trim()) return;
+
+	await updateAndSave((trip) => {
+		const groupFields = trip.arr_fields.filter((field) => field.int_group_id === groupId);
+		const newField = {
+			int_id: Date.now(),
+			int_group_id: groupId,
+			str_label: label.trim(),
+			str_value: '',
+			int_order: groupFields.length
+		};
+
+		return {
+			...trip,
+			arr_fields: [...trip.arr_fields, newField]
+		};
+	});
+}
+
+export async function updateField(fieldId, updatedFields) {
+	await updateAndSave((trip) => ({
+		...trip,
+		arr_fields: trip.arr_fields.map((field) =>
+			field.int_id === fieldId ? { ...field, ...updatedFields } : field
+		)
+	}));
+}
+
+export async function deleteField(fieldId) {
+	await updateAndSave((trip) => ({
+		...trip,
+		arr_fields: trip.arr_fields.filter((field) => field.int_id !== fieldId)
+	}));
+}
+
 // Clear trip
 export async function clearTripState() {
 	await clearTrip();
@@ -84,7 +170,7 @@ async function updateAndSave(updater) {
 
 	tripStore.update((trip) => {
 		if (!trip) return trip;
-		updated = updater(trip);
+		updated = updater(withTripDefaults(trip));
 		return updated;
 	});
 
@@ -346,6 +432,27 @@ export async function reorderBags(orderedIds) {
 	}));
 }
 
+export async function reorderFieldGroups(orderedIds) {
+	await updateAndSave((trip) => ({
+		...trip,
+		arr_field_groups: trip.arr_field_groups.map((group) => {
+			const idx = orderedIds.indexOf(group.int_id);
+			return idx === -1 ? group : { ...group, int_order: idx };
+		})
+	}));
+}
+
+export async function reorderFields(groupId, orderedIds) {
+	await updateAndSave((trip) => ({
+		...trip,
+		arr_fields: trip.arr_fields.map((field) => {
+			if (field.int_group_id !== groupId) return field;
+			const idx = orderedIds.indexOf(field.int_id);
+			return idx === -1 ? field : { ...field, int_order: idx };
+		})
+	}));
+}
+
 export async function reorderTasks(stageId, orderedIds) {
 	await updateAndSave((trip) => ({
 		...trip,
@@ -368,11 +475,7 @@ export async function reorderStages(orderedIds) {
 }
 
 export async function loadTripById(tripId) {
-	const trip = await setActiveTrip(tripId);
-	if (trip) {
-		if (!trip.arr_stages) trip.arr_stages = [];
-		if (!trip.arr_tasks) trip.arr_tasks = [];
-	}
+	const trip = withTripDefaults(await setActiveTrip(tripId));
 	tripStore.set(trip);
 }
 

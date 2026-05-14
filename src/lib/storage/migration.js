@@ -66,7 +66,9 @@ function transformToFlatModel(oldTrip) {
 		arr_categories: categories,
 		arr_items: items,
 		arr_stages: [],
-		arr_tasks: []
+		arr_tasks: [],
+		arr_field_groups: [],
+		arr_fields: []
 	};
 }
 

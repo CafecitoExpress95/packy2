@@ -28,6 +28,7 @@
 	import BagSection from '$lib/components/BagSection.svelte';
 	import PackingView from '$lib/components/PackingView.svelte';
 	import StageSection from '$lib/components/StageSection.svelte';
+	import TripFieldGroups from '$lib/components/TripFieldGroups.svelte';
 
 	const TAB_STORAGE_KEY = 'packy-last-tab';
 	const TABS = ['tripinfo', 'bags', 'items', 'assignment', 'pack', 'stages'];
@@ -296,6 +297,7 @@
 		{#if activeTab === 'tripinfo'}
 			<div class="tab-content">
 				<TripHeader bind:this={tripHeaderEl} trip={$tripStore} />
+				<TripFieldGroups trip={$tripStore} />
 				<div class="trip-actions">
 					<button on:click={deactivateCurrentTrip}>All Trips</button>
 					<button on:click={() => tripHeaderEl.startEdit()}>Edit Trip</button>
